@@ -1,17 +1,15 @@
 {
   "expo": {
-    "name": "lecturers-pokedex-app",
-    "slug": "lecturers-pokedex-app",
+    "name": "pokedex",
+    "slug": "pokedex",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
       "**/*"
@@ -22,11 +20,17 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#ffffff"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "cbfb378c-a7bf-4f6f-a957-92a5b3c97fda"
+      }
+    },
+    "owner": "261692student"
   }
 }
