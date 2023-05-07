@@ -1,20 +1,21 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
 
 export default function HomeScreen({ navigation }: MainNavigationProps) {
-  return (
-    <View style={styles.container}>
-      <Text>Home View</Text>
-    </View>
-  );
+  return <ScrollView contentContainerStyle={styles.container}></ScrollView>;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
+  },
+  row: {
+    flex: 1,
+    flexDirection: "row",
   },
   heading: {
     fontSize: 24,
