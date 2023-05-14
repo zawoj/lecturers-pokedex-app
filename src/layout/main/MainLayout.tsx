@@ -2,9 +2,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { StatusBar } from 'react-native';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import HomeScreen from "../../views/Home";
+import ViewLecturerScreen from "../../views/ViewLecturerScreen";
 import AddScreen from "../../views/AddScreen";
 import ProfileScreen from "../../views/Profile";
 
@@ -26,6 +28,19 @@ const MainLayout = () => {
             headerTitle: "",
             tabBarIcon: ({ focused, color, size }) => {
               return <Ionicons name='home' size={size} color={color} />;
+            },
+          }}
+        />
+        <Tab.Screen
+          name='View Lecturer'
+          component={ViewLecturerScreen}
+          options={{
+            headerTitle: "",
+            headerStyle: {
+              height: StatusBar.currentHeight,
+            },
+            tabBarIcon: ({ focused, color, size }) => {
+              return <Ionicons name='beer' size={size} color={color} />;
             },
           }}
         />
