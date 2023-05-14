@@ -1,6 +1,9 @@
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer, DefaultTheme, DarkTheme, useTheme,
+} from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
+import { useColorScheme } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -16,8 +19,10 @@ export type MainNavigationProps = NativeStackScreenProps<RootStackParamList>;
 const Tab = createBottomTabNavigator();
 
 const MainLayout = () => {
+  const scheme = useColorScheme();
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Tab.Navigator>
         <Tab.Screen
           name='Lectures'

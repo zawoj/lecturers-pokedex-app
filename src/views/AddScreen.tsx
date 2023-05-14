@@ -1,11 +1,14 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
+import { useTheme } from "@react-navigation/native";
 
 export default function AddScreen({ navigation }: MainNavigationProps) {
+  const { colors } = useTheme();
+
   return (
     <View style={styles.container}>
-      <Text>Add Screen</Text>
+      <Text style={{ color: colors.text }}>Add Screen</Text>
     </View>
   );
 }
