@@ -1,7 +1,7 @@
 export type LecturerType = {
   id: string;
   name: string;
-  level: "engineer" | "master" | "doctor" | "professor";
+  level: LecturerLevel;
   image: string;
   description: string;
   classes: string[];
@@ -16,3 +16,10 @@ export type LecturerType = {
     s_5_5: number;
   };
 };
+
+export enum LecturerLevel {
+  ENGINEER = "engineer",
+  MASTER = "master",
+  DOCTOR = "doctor",
+  PROFESSOR = "professor",
+}
