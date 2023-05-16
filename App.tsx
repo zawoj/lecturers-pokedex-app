@@ -1,3 +1,4 @@
+import React from "react";
 import { LecturerProvider } from "./src/context/lecturer";
 import MainLayout from "./src/layout/main/MainLayout";
 

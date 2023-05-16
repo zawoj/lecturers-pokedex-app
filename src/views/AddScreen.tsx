@@ -1,117 +1,126 @@
-import { StyleSheet, View, Text, TextInput, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Button,
+  ScrollView,
+} from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
-import React from "react";
+import React, { useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Classes } from "../types/classes";
-import MultiSelectComponent from "../components/Select/MultiSelectComponent";
+import { LecturerLevel } from "../types/lecturer";
+import MultiSelect from "../components/Select/MultiSelectComponent";
+import { LecturerContext } from "../context/lecturer";
 
 export default function AddScreen({ navigation }: MainNavigationProps) {
-  const { control, handleSubmit, setValue } = useForm();
-  const onSubmit = (data: any) => console.log(data);
-
-  const [selectedOptions, setSelectedOptions] = React.useState<string[]>([]);
-
-  const handleSelectOptions = (values: string) => {
-    if (selectedOptions.length > 0) {
-      if (selectedOptions.includes(values)) {
-        setSelectedOptions(selectedOptions.filter((item) => item !== values));
-        return;
-      }
-      setSelectedOptions([...selectedOptions, ...values]);
-    } else {
-      setSelectedOptions([values]);
-    }
+  const { control, handleSubmit, setValue, reset } = useForm();
+  const { addLecturer, lecturersList } = useContext(LecturerContext);
+  const onSubmit = (data: any) => {
+    reset();
+    addLecturer(data);
+    navigation.navigate("Lectures");
   };
 
-  const options =
-    Classes.map((item) => ({
-      label: item.name,
-      value: item.name,
-    })) || [];
+  const classesOptions: string[] = Classes.map((item) => item.name);
+
+  const lecturesLevelOptions: string[] = Object.values(LecturerLevel);
 
   return (
-    <View style={styles.container}>
-      <Controller
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextInput placeholder='ID' value={value} onChangeText={onChange} />
-        )}
-        name='id'
-      />
-      <Controller
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextInput placeholder='Name' value={value} onChangeText={onChange} />
-        )}
-        name='name'
-      />
-      {/* <Controller
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <select value={value} onChange={onChange}>
-            <option value={LecturerLevel.ENGINEER}>
-              <Text>{LecturerLevel.ENGINEER}</Text>
-            </option>
-            <option value={LecturerLevel.MASTER}>
-              <Text>{LecturerLevel.MASTER}</Text>
-            </option>
-            <option value={LecturerLevel.DOCTOR}>
-              <Text>{LecturerLevel.DOCTOR}</Text>
-            </option>
-            <option value={LecturerLevel.PROFESSOR}>
-              <Text>{LecturerLevel.PROFESSOR}</Text>
-            </option>
-          </select>
-        )}
-        name='level'
-      /> */}
-      <Controller
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder='Image URL'
-            value={value}
-            onChangeText={onChange}
-          />
-        )}
-        name='image'
-      />
-      <Controller
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder='Description'
-            value={value}
-            onChangeText={onChange}
-          />
-        )}
-        name='description'
-      />
-      {/* <MultiSelectComponent
-        setSelectedOptions={setSelectedOptions}
-        control={control}
-        options={options}
-        selectedOptions={selectedOptions}
-        key={selectedOptions.length}
-      /> */}
-      {["s_2", "s_2_5", "s_3", "s_3_5", "s_4", "s_4_5", "s_5", "s_5_5"].map(
-        (grade, i) => (
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.subcontainer}>
           <Controller
-            key={i}
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextInput
-                placeholder={grade}
-                value={String(value)}
-                onChangeText={(value) => onChange(Number(value))}
+                placeholder='ID'
+                value={value}
+                onChangeText={onChange}
+                style={styles.textInputStyle}
               />
             )}
-            name={`gradeDistribution.${grade}`}
+            name='id'
           />
-        )
-      )}
-      <Button title='Submit' onPress={handleSubmit(onSubmit)} />
-    </View>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder='Name'
+                value={value}
+                onChangeText={onChange}
+                style={styles.textInputStyle}
+              />
+            )}
+            name='name'
+          />
+        </View>
+
+        {lecturesLevelOptions && (
+          <MultiSelect options={lecturesLevelOptions} title='Level' />
+        )}
+
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              placeholder='Image URL'
+              value={value}
+              onChangeText={onChange}
+              style={{
+                ...styles.textInputStyle,
+                width: "80%",
+              }}
+            />
+          )}
+          name='image'
+        />
+        <Controller
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              placeholder='Description'
+              value={value}
+              onChangeText={onChange}
+              style={{
+                ...styles.textInputStyle,
+                width: "80%",
+              }}
+              multiline={true}
+              numberOfLines={4}
+              maxLength={80}
+            />
+          )}
+          name='description'
+        />
+        {classesOptions && (
+          <MultiSelect options={classesOptions} multi={true} title='Classes' />
+        )}
+
+        {["2", "3", "3.5", "4", "4.5", "5", "5.5"].map((item, index) => (
+          <Controller
+            key={index}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder={`Rating ${item}`}
+                value={value}
+                onChangeText={onChange}
+                style={{
+                  ...styles.textInputStyle,
+                  width: "80%",
+                }}
+                keyboardType='numeric'
+              />
+            )}
+            name={`rating${item}`}
+          />
+        ))}
+
+        <Button title='Submit' onPress={handleSubmit(onSubmit)} />
+      </View>
+    </ScrollView>
   );
 }
 
@@ -120,6 +129,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 20,
+  },
+  subcontainer: {
+    width: "80%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginBottom: 10,
+    marginTop: 10,
   },
   heading: {
     fontSize: 24,
@@ -128,5 +146,12 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     width: "100%",
+  },
+  textInputStyle: {
+    width: "49%",
+    height: 40,
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
+    margin: 8,
   },
 });

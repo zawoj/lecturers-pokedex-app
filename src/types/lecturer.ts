@@ -7,7 +7,6 @@ export type LecturerType = {
   classes: string[];
   gradeDistribution: {
     s_2: number;
-    s_2_5: number;
     s_3: number;
     s_3_5: number;
     s_4: number;

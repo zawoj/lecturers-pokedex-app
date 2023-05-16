@@ -10,8 +10,9 @@ interface State {
 }
 
 export interface LecturerContextValue extends State {
-  setLecturer: (sample: LecturerType) => void;
-  setLecturersList: (samples: LecturerType[]) => void;
+  setLecturer: (lecturer: LecturerType) => void;
+  setLecturersList: (lecturers: LecturerType[]) => void;
+  addLecturer: (lecturer: LecturerType) => void;
 }
 
 interface LecturerProviderProps {
@@ -21,6 +22,7 @@ interface LecturerProviderProps {
 enum ActionType {
   INITIALIZEPALETTE = "INITIALIZEPALETTE",
   SETLECTURER = "SETLECTURER",
+  ADDLECTURER = "ADDLECTURER",
   SETLECTURERSLIST = "SETLECTURERSLIST",
 }
 
@@ -46,7 +48,18 @@ type SetLecturersListAction = {
   };
 };
 
-type Action = InitializeAction | SetLecturerAction | SetLecturersListAction;
+type AddLecturerAction = {
+  type: ActionType.ADDLECTURER;
+  payload: {
+    lecturer: LecturerType;
+  };
+};
+
+type Action =
+  | InitializeAction
+  | SetLecturerAction
+  | SetLecturersListAction
+  | AddLecturerAction;
 
 type Handler = (state: State, action: any) => State;
 
@@ -81,6 +94,17 @@ const handlers: Record<ActionType, Handler> = {
       lecturersList,
     };
   },
+  ADDLECTURER: (state: State, action: AddLecturerAction): State => {
+    const { lecturer } = action.payload;
+    const newLecturersList = state.lecturersList
+      ? [...state.lecturersList, lecturer]
+      : [lecturer];
+
+    return {
+      ...state,
+      lecturersList: newLecturersList,
+    };
+  },
 };
 
 const reducer = (state: State, action: Action): State =>
@@ -90,6 +114,7 @@ export const LecturerContext = createContext<LecturerContextValue>({
   ...initialState,
   setLecturer: () => {},
   setLecturersList: () => {},
+  addLecturer: () => {},
 });
 
 export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
@@ -136,12 +161,24 @@ export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
     });
   };
 
+  const addLecturer = (lecturer: LecturerType): void => {
+    // FETCHING FROM API
+    dispatch({
+      type: ActionType.ADDLECTURER,
+      payload: {
+        lecturer,
+      },
+    });
+  };
+
   return (
+    // @ts-ignore
     <LecturerContext.Provider
       value={{
         ...state,
         setLecturer,
         setLecturersList,
+        addLecturer,
       }}
     >
       {children}

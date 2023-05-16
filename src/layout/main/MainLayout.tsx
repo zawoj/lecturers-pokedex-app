@@ -9,7 +9,9 @@ import AddScreen from "../../views/AddScreen";
 import ProfileScreen from "../../views/Profile";
 
 type RootStackParamList = {
-  Home: undefined;
+  Lectures: undefined;
+  AddLectures: undefined;
+  Profile: undefined;
 };
 
 export type MainNavigationProps = NativeStackScreenProps<RootStackParamList>;
