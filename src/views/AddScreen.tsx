@@ -13,13 +13,28 @@ import { Classes } from "../types/classes";
 import { LecturerLevel } from "../types/lecturer";
 import MultiSelect from "../components/Select/MultiSelectComponent";
 import { LecturerContext } from "../context/lecturer";
+import ImagePickerComponent from "../components/ImagePicker/ImagePicker";
 
 export default function AddScreen({ navigation }: MainNavigationProps) {
   const { control, handleSubmit, setValue, reset } = useForm();
   const { addLecturer, lecturersList } = useContext(LecturerContext);
   const onSubmit = (data: any) => {
-    reset();
-    addLecturer(data);
+    reset({
+      name: null,
+      level: null,
+      classes: null,
+      image: null,
+      description: null,
+      rating2: null,
+      rating3: null,
+      rating3_5: null,
+      rating4: null,
+      rating4_5: null,
+      rating5: null,
+      rating5_5: null,
+    });
+    console.log(JSON.stringify(data));
+    // addLecturer(data);
     navigation.navigate("Lectures");
   };
 
@@ -35,44 +50,39 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextInput
-                placeholder='ID'
-                value={value}
-                onChangeText={onChange}
-                style={styles.textInputStyle}
-              />
-            )}
-            name='id'
-          />
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <TextInput
                 placeholder='Name'
                 value={value}
                 onChangeText={onChange}
-                style={styles.textInputStyle}
+                style={{
+                  ...styles.textInputStyle,
+                  width: "100%",
+                }}
               />
             )}
             name='name'
           />
         </View>
-
         {lecturesLevelOptions && (
-          <MultiSelect options={lecturesLevelOptions} title='Level' />
+          <MultiSelect
+            options={lecturesLevelOptions}
+            title='Level'
+            setValue={setValue}
+            name='level'
+          />
         )}
-
+        {classesOptions && (
+          <MultiSelect
+            options={classesOptions}
+            multi={true}
+            title='Classes'
+            setValue={setValue}
+            name='classes'
+          />
+        )}
         <Controller
           control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              placeholder='Image URL'
-              value={value}
-              onChangeText={onChange}
-              style={{
-                ...styles.textInputStyle,
-                width: "80%",
-              }}
-            />
+          render={({ field: { onChange } }) => (
+            <ImagePickerComponent onChange={onChange} />
           )}
           name='image'
         />
@@ -94,31 +104,114 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           )}
           name='description'
         />
-        {classesOptions && (
-          <MultiSelect options={classesOptions} multi={true} title='Classes' />
-        )}
 
-        {["2", "3", "3.5", "4", "4.5", "5", "5.5"].map((item, index) => (
+        <View style={styles.subcontainer}>
           <Controller
-            key={index}
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextInput
-                placeholder={`Rating ${item}`}
+                placeholder='Rating 2'
+                value={value}
+                onChangeText={onChange}
+                style={styles.textInputStyle}
+              />
+            )}
+            name='rating2'
+          />
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder='Rating 3'
+                value={value}
+                onChangeText={onChange}
+                style={styles.textInputStyle}
+              />
+            )}
+            name='rating3'
+          />
+        </View>
+
+        <View style={styles.subcontainer}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder='Rating 3.5'
+                value={value}
+                onChangeText={onChange}
+                style={styles.textInputStyle}
+              />
+            )}
+            name='rating3_5'
+          />
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder='Rating 4'
+                value={value}
+                onChangeText={onChange}
+                style={styles.textInputStyle}
+              />
+            )}
+            name='rating4'
+          />
+        </View>
+
+        <View style={styles.subcontainer}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder='Rating 4.5'
+                value={value}
+                onChangeText={onChange}
+                style={styles.textInputStyle}
+              />
+            )}
+            name='rating4_5'
+          />
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder='Rating 5'
+                value={value}
+                onChangeText={onChange}
+                style={styles.textInputStyle}
+              />
+            )}
+            name='rating5'
+          />
+        </View>
+
+        <View style={styles.subcontainer}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder='Rating 5.5'
                 value={value}
                 onChangeText={onChange}
                 style={{
                   ...styles.textInputStyle,
-                  width: "80%",
+                  width: "100%",
                 }}
-                keyboardType='numeric'
               />
             )}
-            name={`rating${item}`}
+            name='rating5_5'
           />
-        ))}
+        </View>
 
-        <Button title='Submit' onPress={handleSubmit(onSubmit)} />
+        <View
+          style={{
+            width: "80%",
+            margin: 10,
+          }}
+        >
+          <Button title='Submit' onPress={handleSubmit(onSubmit)} />
+        </View>
       </View>
     </ScrollView>
   );

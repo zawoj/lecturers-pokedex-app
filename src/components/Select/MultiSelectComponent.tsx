@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { UseFormSetValue } from "react-hook-form";
 import {
   View,
   Text,
@@ -13,10 +14,14 @@ const MultiSelect = ({
   multi = false,
   options = [],
   title = "Select Options",
+  setValue,
+  name,
 }: {
   multi?: boolean;
   title?: string;
   options: string[];
+  setValue: UseFormSetValue<any>;
+  name: string;
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -25,16 +30,27 @@ const MultiSelect = ({
     if (multi) {
       if (selectedOptions.includes(option)) {
         setSelectedOptions(selectedOptions.filter((item) => item !== option));
+        setValue(
+          name,
+          selectedOptions.filter((item) => item !== option)
+        );
       } else {
         setSelectedOptions([...selectedOptions, option]);
+        setValue(name, [...selectedOptions, option]);
       }
     } else {
       setSelectedOptions([option]);
+      setValue(name, [option]);
     }
   };
 
   return (
-    <View>
+    <View
+      style={{
+        margin: 20,
+        width: "75%",
+      }}
+    >
       <Button title={title} onPress={() => setIsOpen(true)} />
       <View
         style={{
