@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import { LecturerType, LecturerLevel } from "../types/lecturer";
 
+const API_URL = "https://pokedex-uijzr7bcfa-ew.a.run.app";
 
 interface State {
   lecturer: LecturerType | null;
@@ -11,8 +12,8 @@ interface State {
 }
 
 export interface LecturerContextValue extends State {
-  setLecturer: (lecturer: LecturerType) => void;
-  setLecturersList: (lecturers: LecturerType[]) => void;
+  getLecturer: (id: string) => void;
+  getLecturersList: () => void;
   addLecturer: (lecturer: LecturerType) => void;
 }
 
@@ -64,10 +65,9 @@ type Action =
 
 type Handler = (state: State, action: any) => State;
 
-
 // TODO: delete this and connect API
-const gebala : LecturerType = {
-  id: "1234",
+const gebala: LecturerType = {
+  _id: "1234",
   name: "Maciej Gębala",
   level: LecturerLevel.DOCTOR,
   image: require("../../assets/gebala_portret.jpg"),
@@ -81,12 +81,12 @@ const gebala : LecturerType = {
     s_4_5: 0,
     s_5: 0,
     s_5_5: 0,
-  }
-}
+  },
+};
 
 const initialState: State = {
   lecturer: null,
-  lecturersList: [gebala, gebala, gebala, gebala],
+  lecturersList: [],
 };
 
 const handlers: Record<ActionType, Handler> = {
@@ -133,8 +133,8 @@ const reducer = (state: State, action: Action): State =>
 
 export const LecturerContext = createContext<LecturerContextValue>({
   ...initialState,
-  setLecturer: () => {},
-  setLecturersList: () => {},
+  getLecturer: () => {},
+  getLecturersList: () => {},
   addLecturer: () => {},
 });
 
@@ -145,15 +145,7 @@ export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
   useEffect(() => {
     const initialize = async (): Promise<void> => {
       try {
-        // const getSamples = await authApi.getSamples();
-        // const currentSample = await authApi.getSample();
-        // dispatch({
-        //   type: ActionType.INITIALIZEPALETTE,
-        //   payload: {
-        //     currentSample,
-        //     samples: getSamples,
-        //   },
-        // });
+        getLecturersList();
       } catch (err) {
         console.error(err);
       }
@@ -162,33 +154,50 @@ export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
     initialize();
   }, []);
 
-  const setLecturer = (lecturer: LecturerType): void => {
-    // FETCHING FROM API
-    dispatch({
-      type: ActionType.SETLECTURER,
-      payload: {
-        lecturer,
-      },
+  const getLecturer = (id: string): void => {
+    console.log(id);
+    const res = fetch(`${API_URL}/users/${id}`).then((response) =>
+      response.json()
+    );
+    res.then((data) => {
+      console.log(data);
+      dispatch({
+        type: ActionType.SETLECTURER,
+        payload: {
+          lecturer: data,
+        },
+      });
     });
   };
 
-  const setLecturersList = (lecturersList: LecturerType[]): void => {
-    // FETCHING FROM API
-    dispatch({
-      type: ActionType.SETLECTURERSLIST,
-      payload: {
-        lecturersList,
-      },
+  const getLecturersList = (): void => {
+    const res = fetch(`${API_URL}/users`).then((response) => response.json());
+
+    res.then((data) => {
+      dispatch({
+        type: ActionType.SETLECTURERSLIST,
+        payload: {
+          lecturersList: data,
+        },
+      });
     });
+
+    // FETCHING FROM API
   };
 
   const addLecturer = (lecturer: LecturerType): void => {
-    // FETCHING FROM API
-    dispatch({
-      type: ActionType.ADDLECTURER,
-      payload: {
-        lecturer,
-      },
+    const res = fetch(`${API_URL}/users`, {
+      method: "POST",
+      body: JSON.stringify(lecturer),
+    }).then((response) => response.json());
+
+    res.then((data) => {
+      dispatch({
+        type: ActionType.ADDLECTURER,
+        payload: {
+          lecturer: data,
+        },
+      });
     });
   };
 
@@ -197,8 +206,8 @@ export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
     <LecturerContext.Provider
       value={{
         ...state,
-        setLecturer,
-        setLecturersList,
+        getLecturer,
+        getLecturersList,
         addLecturer,
       }}
     >

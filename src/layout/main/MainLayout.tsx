@@ -1,11 +1,14 @@
 import {
-  NavigationContainer, DefaultTheme, DarkTheme, useTheme,
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+  useTheme,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { useColorScheme } from 'react-native';
+import { useColorScheme } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StatusBar } from 'react-native';
+import { StatusBar } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import HomeScreen from "../../views/Home";
@@ -15,7 +18,8 @@ import ProfileScreen from "../../views/Profile";
 
 type RootStackParamList = {
   Lectures: undefined;
-  AddLectures: undefined;
+  viewLecturer: undefined;
+  addLectures: undefined;
   Profile: undefined;
 };
 
@@ -26,23 +30,23 @@ const MainLayout = () => {
   const scheme = useColorScheme();
 
   return (
-    <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationContainer theme={scheme === "dark" ? DarkTheme : DefaultTheme}>
       <Tab.Navigator>
         <Tab.Screen
           name='Lectures'
           component={HomeScreen}
           options={{
-            headerTitle: "",
+            headerTitle: "Lectures",
             tabBarIcon: ({ focused, color, size }) => {
               return <Ionicons name='home' size={size} color={color} />;
             },
           }}
         />
         <Tab.Screen
-          name='View Lecturer'
+          name='viewLecturer'
           component={ViewLecturerScreen}
           options={{
-            headerTitle: "",
+            headerTitle: "View Lecturer",
             headerStyle: {
               height: StatusBar.currentHeight,
             },
@@ -52,10 +56,10 @@ const MainLayout = () => {
           }}
         />
         <Tab.Screen
-          name='Add Lectures'
+          name='addLectures'
           component={AddScreen}
           options={{
-            headerTitle: "",
+            headerTitle: "Add Lectures",
             tabBarIcon: ({ focused, color, size }) => {
               return <Ionicons name='add' size={size} color={color} />;
             },
@@ -65,7 +69,7 @@ const MainLayout = () => {
           name='Profile'
           component={ProfileScreen}
           options={{
-            headerTitle: "",
+            headerTitle: "Profile",
             tabBarIcon: ({ focused, color, size }) => {
               return <AntDesign name='user' size={size} color={color} />;
             },

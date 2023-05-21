@@ -1,36 +1,47 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, Text, ScrollView, Button, Image, SafeAreaView, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Button,
+  Image,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import { LecturerContext } from "../context/lecturer";
 import { LecturerType, LecturerLevel } from "../types/lecturer";
 
 export default function HomeScreen({ navigation }: MainNavigationProps) {
-  const { lecturersList, setLecturer } = useContext(LecturerContext);
+  const { lecturersList, getLecturer } = useContext(LecturerContext);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-
         {lecturersList.map((item, index) => (
           <TouchableOpacity
             style={styles.card}
             onPress={() => {
-              setLecturer(item);
-              navigation.navigate("View Lecturer")
-            }}>
-
+              getLecturer(item._id);
+              navigation.navigate("viewLecturer");
+            }}
+            key={item._id}
+          >
             <Image
+              // @ts-ignore
               source={item.image}
-              resizeMode="cover"
-              style={styles.avatar} />
+              resizeMode='cover'
+              style={styles.avatar}
+            />
             <View style={styles.textContainer}>
               <Text style={styles.name}>{item.name}</Text>
             </View>
           </TouchableOpacity>
         ))}
-
       </ScrollView>
-    </SafeAreaView>);
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -41,7 +52,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   avatar: {
     width: "100%",
@@ -53,15 +64,15 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     marginTop: 5,
     borderRadius: 10,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   textContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   name: {
     color: "black",
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });

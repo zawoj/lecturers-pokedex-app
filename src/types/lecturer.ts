@@ -1,5 +1,5 @@
 export type LecturerType = {
-  id: string;
+  _id: string;
   name: string;
   level: LecturerLevel;
   image: string;
