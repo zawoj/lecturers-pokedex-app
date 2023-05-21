@@ -1,31 +1,67 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Button, Image, SafeAreaView, TouchableOpacity } from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import { LecturerContext } from "../context/lecturer";
+import { LecturerType, LecturerLevel } from "../types/lecturer";
 
 export default function HomeScreen({ navigation }: MainNavigationProps) {
-  const { lecturersList } = useContext(LecturerContext);
+  const { lecturersList, setLecturer } = useContext(LecturerContext);
 
-  return <ScrollView contentContainerStyle={styles.container}></ScrollView>;
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+
+        {lecturersList.map((item, index) => (
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => {
+              setLecturer(item);
+              navigation.navigate("View Lecturer")
+            }}>
+
+            <Image
+              source={item.image}
+              resizeMode="cover"
+              style={styles.avatar} />
+            <View style={styles.textContainer}>
+              <Text style={styles.name}>{item.name}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+
+      </ScrollView>
+    </SafeAreaView>);
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  row: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: "bold",
+    backgroundColor: "#FFFFFF",
   },
   scrollContainer: {
-    flex: 1,
-    width: "100%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around"
   },
+  avatar: {
+    width: "100%",
+    height: "80%",
+  },
+  card: {
+    borderWidth: 1,
+    width: "48%",
+    aspectRatio: 1,
+    marginTop: 5,
+    borderRadius: 10,
+    overflow: "hidden"
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  name: {
+    color: "black",
+    fontWeight: "bold"
+  }
 });

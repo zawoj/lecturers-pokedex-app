@@ -2,11 +2,12 @@ import { createContext, useEffect, useReducer } from "react";
 import type { FC, ReactNode } from "react";
 import PropTypes from "prop-types";
 
-import { LecturerType } from "../types/lecturer";
+import { LecturerType, LecturerLevel } from "../types/lecturer";
+
 
 interface State {
   lecturer: LecturerType | null;
-  lecturersList: LecturerType[] | null;
+  lecturersList: LecturerType[];
 }
 
 export interface LecturerContextValue extends State {
@@ -63,9 +64,29 @@ type Action =
 
 type Handler = (state: State, action: any) => State;
 
+
+// TODO: delete this and connect API
+const gebala : LecturerType = {
+  id: "1234",
+  name: "Maciej Gębala",
+  level: LecturerLevel.DOCTOR,
+  image: require("../../assets/gebala_portret.jpg"),
+  description: "Jak jest doktor każdy widzi",
+  classes: [],
+  gradeDistribution: {
+    s_2: 0,
+    s_3: 0,
+    s_3_5: 0,
+    s_4: 0,
+    s_4_5: 0,
+    s_5: 0,
+    s_5_5: 0,
+  }
+}
+
 const initialState: State = {
   lecturer: null,
-  lecturersList: null,
+  lecturersList: [gebala, gebala, gebala, gebala],
 };
 
 const handlers: Record<ActionType, Handler> = {
