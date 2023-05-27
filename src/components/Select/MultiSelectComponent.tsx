@@ -47,8 +47,8 @@ const MultiSelect = ({
   return (
     <View
       style={{
-        margin: 20,
-        width: "75%",
+        margin: 0,
+        width: "100%",
       }}
     >
       <Button title={title} onPress={() => setIsOpen(true)} />
@@ -60,7 +60,7 @@ const MultiSelect = ({
           marginTop: 10,
         }}
       >
-        <Text>Selected Options:</Text>
+        <Text>Selected:</Text>
         {selectedOptions.map((option, index) => (
           <Text key={index}> {option} </Text>
         ))}
@@ -72,7 +72,7 @@ const MultiSelect = ({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <ScrollView>
+            <ScrollView style={{flexGrow:0}}>
               {options.map((option, index) => (
                 <TouchableOpacity
                   key={index}

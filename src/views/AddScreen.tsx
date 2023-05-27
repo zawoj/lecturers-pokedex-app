@@ -40,12 +40,12 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
   };
 
   const classesOptions: string[] = Classes.map((item) => item.name);
-
   const lecturesLevelOptions: string[] = Object.values(LecturerLevel);
 
   return (
     <ScrollView>
       <View style={styles.container}>
+
         <View style={styles.subcontainer}>
           <Controller
             control={control}
@@ -54,15 +54,14 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
                 placeholder='Name'
                 value={value}
                 onChangeText={onChange}
-                style={{
-                  ...styles.textInputStyle,
-                  width: "100%",
-                }}
+                style={styles.textInputStyle}
               />
             )}
             name='name'
           />
         </View>
+
+        <View style={styles.subcontainer}>
         {lecturesLevelOptions && (
           <MultiSelect
             options={lecturesLevelOptions}
@@ -71,22 +70,8 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             name='level'
           />
         )}
-        {classesOptions && (
-          <MultiSelect
-            options={classesOptions}
-            multi={true}
-            title='Classes'
-            setValue={setValue}
-            name='classes'
-          />
-        )}
-        <Controller
-          control={control}
-          render={({ field: { onChange } }) => (
-            <ImagePickerComponent onChange={onChange} />
-          )}
-          name='image'
-        />
+        </View>
+
         <Controller
           control={control}
           render={({ field: { onChange, value } }) => (
@@ -107,6 +92,29 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
         />
 
         <View style={styles.subcontainer}>
+        {classesOptions && (
+          <MultiSelect
+            options={classesOptions}
+            multi={true}
+            title='Classes'
+            setValue={setValue}
+            name='classes'
+          />
+        )}
+        </View>
+        
+        <View style={styles.subcontainer}>
+        <Controller
+          control={control}
+          render={({ field: { onChange } }) => (
+            <ImagePickerComponent onChange={onChange} />
+          )}
+          name='image'
+        />
+</View>
+
+        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 30}}>Ratings:</Text>
+        <View style={styles.subcontainer}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -114,11 +122,14 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
                 placeholder='Rating 2'
                 value={value}
                 onChangeText={onChange}
+                keyboardType='numeric'
                 style={styles.textInputStyle}
               />
             )}
             name='rating2'
           />
+        </View>
+        <View style={styles.subcontainer}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -126,13 +137,13 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
                 placeholder='Rating 3'
                 value={value}
                 onChangeText={onChange}
+                keyboardType='numeric'
                 style={styles.textInputStyle}
               />
             )}
             name='rating3'
           />
         </View>
-
         <View style={styles.subcontainer}>
           <Controller
             control={control}
@@ -141,11 +152,14 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
                 placeholder='Rating 3.5'
                 value={value}
                 onChangeText={onChange}
+                keyboardType='numeric'
                 style={styles.textInputStyle}
               />
             )}
             name='rating3_5'
           />
+        </View>
+        <View style={styles.subcontainer}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -153,13 +167,13 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
                 placeholder='Rating 4'
                 value={value}
                 onChangeText={onChange}
+                keyboardType='numeric'
                 style={styles.textInputStyle}
               />
             )}
             name='rating4'
           />
         </View>
-
         <View style={styles.subcontainer}>
           <Controller
             control={control}
@@ -168,11 +182,14 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
                 placeholder='Rating 4.5'
                 value={value}
                 onChangeText={onChange}
+                keyboardType='numeric'
                 style={styles.textInputStyle}
               />
             )}
             name='rating4_5'
           />
+        </View>
+        <View style={styles.subcontainer}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -180,6 +197,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
                 placeholder='Rating 5'
                 value={value}
                 onChangeText={onChange}
+                keyboardType='numeric'
                 style={styles.textInputStyle}
               />
             )}
@@ -195,10 +213,8 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
                 placeholder='Rating 5.5'
                 value={value}
                 onChangeText={onChange}
-                style={{
-                  ...styles.textInputStyle,
-                  width: "100%",
-                }}
+                keyboardType='numeric'
+                style={styles.textInputStyle}
               />
             )}
             name='rating5_5'
@@ -242,10 +258,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   textInputStyle: {
-    width: "49%",
+    width: "100%",
     height: 40,
     borderBottomColor: "gray",
     borderBottomWidth: 1,
-    margin: 8,
+    marginTop: 4,
   },
 });

@@ -23,16 +23,18 @@ export default function ImagePickerComponent({ onChange }: { onChange: any }) {
     <View
       style={{
         flex: 1,
-        alignItems: "center",
+        alignItems: "stretch",
         justifyContent: "center",
-        margin: 20,
+        width: "100%",
+        margin: 0,
       }}
     >
-      <Button title='Pick an image from camera roll' onPress={pickImage} />
+      <Button title='Pick an image' onPress={pickImage}/>
       {image && (
         <Image
           source={{ uri: image }}
-          style={{ width: 200, height: 200, margin: 10 }}
+          resizeMode="contain"
+          style={{ width: '100%', height: undefined, aspectRatio: 1, margin: 10, alignSelf: "center" }}
         />
       )}
     </View>
