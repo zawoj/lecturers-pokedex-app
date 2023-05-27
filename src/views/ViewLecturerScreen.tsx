@@ -42,7 +42,7 @@ export default function ViewLecturerScreen({
   const onSubmit = (data: any) => {
     console.log(data);
 
-    axios.post(`${API_URL}/users/${lecturer._id}/comments`, data)
+    axios.post(`${API_URL}/users/${lecturer._id}/comment`, data)
     .then((response) => {
       console.log(response);
       getLecturer(lecturer._id);

@@ -4,9 +4,12 @@ import PropTypes from "prop-types";
 
 import { LecturerType, LecturerLevel } from "../types/lecturer";
 import * as FileSystem from 'expo-file-system';
+import * as ImageManipulator from "expo-image-manipulator";
+import { Image } from "react-native";
+
 import axios from 'axios';
 
-export const API_URL = "TODO";
+export const API_URL = "https://pokedex-uijzr7bcfa-ew.a.run.app";
 
 interface State {
   lecturer: LecturerType | null;
@@ -116,9 +119,9 @@ const reducer = (state: State, action: Action): State =>
 
 export const LecturerContext = createContext<LecturerContextValue>({
   ...initialState,
-  getLecturer: () => {},
-  getLecturersList: () => {},
-  addLecturer: () => {},
+  getLecturer: () => { },
+  getLecturersList: () => { },
+  addLecturer: () => { },
 });
 
 export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
@@ -168,30 +171,71 @@ export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
     // FETCHING FROM API
   };
 
+
+
   const addLecturer = (lecturer: LecturerType): void => {
     console.log(lecturer.image);
 
-    let form = new FormData();
-    form.append('file', { uri: lecturer.image, name: 'media', type: `image/jpeg` } as any)
-    form.append("data", JSON.stringify(lecturer));
 
-    const options = {
-      method: 'POST',
-      headers: {
+    // Helper function to get image size as a promise
+    const getImageSize = (uri: string): Promise<{ width: number, height: number }> => {
+      return new Promise((resolve, reject) => {
+        Image.getSize(uri,
+          (width, height) => resolve({ width, height }),
+          error => reject(error)
+        );
+      });
+    };
+
+    const processImage = async () => {
+      try {
+        const { width, height } = await getImageSize(lecturer.image);
+
+        // Check which is larger
+        let newSize;
+        if (width >= height) {
+          newSize = { width: 500 };
+        } else {
+          newSize = { height: 500 };
+        }
+
+        // Resize image
+        const manipResult = await ImageManipulator.manipulateAsync(
+          lecturer.image,
+          [{ resize: newSize }], // This will resize to a maximum width or height of 500px depending on which is larger
+          { compress: 1, format: ImageManipulator.SaveFormat.JPEG } // 1 is maximum quality
+        );
+
+        return manipResult.uri;
+
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    };
+
+    processImage().then(manipulatedUri => {
+      let form = new FormData();
+      form.append('file', { uri: manipulatedUri, name: 'media', type: `image/jpeg` } as any)
+      form.append("data", JSON.stringify(lecturer));
+
+      const options = {
+        method: 'POST',
+        headers: {
           Accept: 'application/json',
           'Content-Type': 'multipart/form-data',
-      },
-  };
+        },
+      };
 
-  axios.post(`${API_URL}/users`, form, options)
-  .then((response) => {
-    console.log(response);
-    getLecturersList();
-  })
-  .catch((error) => console.log(error));
+      axios.post(`${API_URL}/users`, form, options)
+        .then((response) => {
+          console.log(response);
+          getLecturersList();
+        })
+        .catch((error) => console.log(error));
+    })
 
 
-  
   };
 
   return (
