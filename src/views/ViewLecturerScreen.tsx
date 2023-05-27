@@ -53,7 +53,7 @@ export default function ViewLecturerScreen({
           width={screenWidth * 0.9}
           height={10}
         />
-        <Text style={styles.description}>{currentLecturer.description}</Text>
+        <Text style={styles.description}>{lecturer.description}</Text>
         <Text style={styles.heading}>Classes</Text>
         <View>
           {lecturer.classes.map((item, index) => (
