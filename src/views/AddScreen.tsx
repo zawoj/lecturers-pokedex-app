@@ -10,15 +10,30 @@ import { MainNavigationProps } from "../layout/main/MainLayout";
 import React, { useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Classes } from "../types/classes";
-import { LecturerLevel } from "../types/lecturer";
+import { LecturerLevel, LecturerType } from "../types/lecturer";
 import MultiSelect from "../components/Select/MultiSelectComponent";
 import { LecturerContext } from "../context/lecturer";
 import ImagePickerComponent from "../components/ImagePicker/ImagePicker";
+
 
 export default function AddScreen({ navigation }: MainNavigationProps) {
   const { control, handleSubmit, setValue, reset } = useForm();
   const { addLecturer, lecturersList } = useContext(LecturerContext);
   const onSubmit = (data: any) => {
+
+
+    if(data.name === null || data.name == ""){
+      return;
+    }
+
+    if(data.level == null){
+      return;
+    }
+
+    if(data.image == null){
+      return;
+    }
+
     reset({
       name: null,
       level: null,
@@ -33,9 +48,27 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
       rating5: null,
       rating5_5: null,
     });
-    data.image = data.image.uri;
-    console.log(JSON.stringify(data));
-    addLecturer(data);
+
+    const lecturer: LecturerType = {
+      _id: "-1",
+      name: data.name,
+      level: data.level,
+      image: data.image.uri,
+      description: data.description ? data.description: "",
+      classes: data.classes ? data.classes : [],
+      gradeDistribution: {
+        s_2: data.rating2 ? parseInt(data.rating2) : 0,
+        s_3: data.rating3 ? parseInt(data.rating3) : 0,
+        s_3_5: data.rating3_5 ? parseInt(data.rating3_5) : 0,
+        s_4: data.rating4 ? parseInt(data.rating4) : 0,
+        s_4_5: data.rating4_5 ? parseInt(data.rating4_5) : 0,
+        s_5: data.rating5 ? parseInt(data.rating5) : 0,
+        s_5_5: data.rating5_5 ? parseInt(data.rating5_5) : 0,
+      },
+    };
+
+    console.log(JSON.stringify(lecturer));
+    addLecturer(lecturer);
     navigation.navigate("Lectures");
   };
 
