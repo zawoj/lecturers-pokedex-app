@@ -12,6 +12,7 @@ import {
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import { LecturerContext } from "../context/lecturer";
 import { LecturerType, LecturerLevel } from "../types/lecturer";
+import { COLORS } from "../types/colors";
 
 export default function HomeScreen({ navigation }: MainNavigationProps) {
   const { lecturersList, getLecturer } = useContext(LecturerContext);
@@ -30,7 +31,7 @@ export default function HomeScreen({ navigation }: MainNavigationProps) {
           >
             <Image
               // @ts-ignore
-              source={{ uri: item.image}}
+              source={{ uri: item.image }}
               resizeMode='cover'
               style={styles.avatar}
             />
@@ -47,7 +48,7 @@ export default function HomeScreen({ navigation }: MainNavigationProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: COLORS.background,
   },
   scrollContainer: {
     flexDirection: "row",
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     height: "80%",
   },
   card: {
-    borderWidth: 1,
+    // borderWidth: 1,
     width: "48%",
     aspectRatio: 1,
     marginTop: 5,
@@ -67,12 +68,13 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   textContainer: {
+    backgroundColor: COLORS.surface,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   name: {
-    color: "black",
+    color: COLORS.text,
     fontWeight: "bold",
   },
 });
