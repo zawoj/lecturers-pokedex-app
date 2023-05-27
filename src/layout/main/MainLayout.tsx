@@ -14,6 +14,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import HomeScreen from "../../views/Home";
 import ViewLecturerScreen from "../../views/ViewLecturerScreen";
 import AddScreen from "../../views/AddScreen";
+import { COLORS } from "../../types/colors";
 
 type RootStackParamList = {
   Lectures: undefined;
@@ -25,15 +26,29 @@ type RootStackParamList = {
 export type MainNavigationProps = NativeStackScreenProps<RootStackParamList>;
 const Tab = createBottomTabNavigator();
 
+const screenOptions = {
+  tabBarStyle: {
+    backgroundColor: COLORS.tabBar,
+    borderTopWidth: 0,
+  },
+  tabBarItemStyle: {
+    marginBottom: 2
+  }
+};
+
 const MainLayout = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator {...{ screenOptions }}>
         <Tab.Screen
           name='Lectures'
           component={HomeScreen}
           options={{
-            headerTitle: "Lectures",
+            title: "Lecturers",
+            tabBarActiveTintColor: COLORS.tabIconSelected,
+            tabBarInactiveTintColor: COLORS.tabIconDefault,
+            headerStyle: { backgroundColor: COLORS.tabBar },
+            headerTintColor: COLORS.text,
             tabBarIcon: ({ focused, color, size }) => {
               return <Ionicons name='home' size={size} color={color} />;
             },
@@ -43,9 +58,13 @@ const MainLayout = () => {
           name='viewLecturer'
           component={ViewLecturerScreen}
           options={{
-            headerTitle: "View Lecturer",
+            title: "View Lecturer",
+            tabBarActiveTintColor: COLORS.tabIconSelected,
+            tabBarInactiveTintColor: COLORS.tabIconDefault,
+            headerTintColor: COLORS.text,
             headerStyle: {
               height: StatusBar.currentHeight,
+              backgroundColor: COLORS.tabBar
             },
             tabBarIcon: ({ focused, color, size }) => {
               return <Ionicons name='beer' size={size} color={color} />;
@@ -56,14 +75,20 @@ const MainLayout = () => {
           name='addLectures'
           component={AddScreen}
           options={{
-            headerTitle: "Add Lectures",
+            title: "Add Lecturer",
+            tabBarActiveTintColor: COLORS.tabIconSelected,
+            tabBarInactiveTintColor: COLORS.tabIconDefault,
+            headerTintColor: COLORS.text,
+            headerStyle: {
+              backgroundColor: COLORS.tabBar
+            },
             tabBarIcon: ({ focused, color, size }) => {
               return <Ionicons name='add' size={size} color={color} />;
             },
           }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
+    </NavigationContainer >
   );
 };
 
