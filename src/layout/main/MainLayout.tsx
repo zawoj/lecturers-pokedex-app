@@ -27,10 +27,8 @@ export type MainNavigationProps = NativeStackScreenProps<RootStackParamList>;
 const Tab = createBottomTabNavigator();
 
 const MainLayout = () => {
-  const scheme = useColorScheme();
-
   return (
-    <NavigationContainer theme={scheme === "dark" ? DarkTheme : DefaultTheme}>
+    <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen
           name='Lectures'
