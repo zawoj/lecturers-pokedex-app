@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Classes } from "../types/classes";
 import { LecturerLevel, LecturerType } from "../types/lecturer";
@@ -17,8 +17,10 @@ import ImagePickerComponent from "../components/ImagePicker/ImagePicker";
 
 
 export default function AddScreen({ navigation }: MainNavigationProps) {
+  const [dummestCounterEver, setDummestCounter] = useState<number>(5);
   const { control, handleSubmit, setValue, reset } = useForm();
   const { addLecturer, lecturersList } = useContext(LecturerContext);
+  
   const onSubmit = (data: any) => {
 
 
@@ -48,6 +50,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
       rating5: null,
       rating5_5: null,
     });
+    setDummestCounter(dummestCounterEver + 1);
 
     const lecturer: LecturerType = {
       _id: "-1",
@@ -101,6 +104,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             title='Level'
             setValue={setValue}
             name='level'
+            key={3*dummestCounterEver+2}
           />
         )}
         </View>
@@ -132,6 +136,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             title='Classes'
             setValue={setValue}
             name='classes'
+            key={3*dummestCounterEver+1}
           />
         )}
         </View>
@@ -140,7 +145,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
         <Controller
           control={control}
           render={({ field: { onChange } }) => (
-            <ImagePickerComponent onChange={onChange} />
+            <ImagePickerComponent onChange={onChange} key={3*dummestCounterEver}/>
           )}
           name='image'
         />

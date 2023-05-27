@@ -194,8 +194,6 @@ export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
     form.append('file', { uri: lecturer.image, name: 'media', type: `image/jpeg` } as any)
     form.append("data", JSON.stringify(lecturer));
 
-
-
     const options = {
       method: 'POST',
       headers: {
