@@ -17,7 +17,7 @@ import ImagePickerComponent from "../components/ImagePicker/ImagePicker";
 
 
 export default function AddScreen({ navigation }: MainNavigationProps) {
-  const [dummestCounterEver, setDummestCounter] = useState<number>(5);
+  const [dummestCounterEver, setDummestCounter] = useState<number>(5); // do not touch !!!
   const { control, handleSubmit, setValue, reset } = useForm();
   const { addLecturer, lecturersList } = useContext(LecturerContext);
   

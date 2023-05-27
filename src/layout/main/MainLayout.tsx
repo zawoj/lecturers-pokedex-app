@@ -14,7 +14,6 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import HomeScreen from "../../views/Home";
 import ViewLecturerScreen from "../../views/ViewLecturerScreen";
 import AddScreen from "../../views/AddScreen";
-import ProfileScreen from "../../views/Profile";
 
 type RootStackParamList = {
   Lectures: undefined;
@@ -60,16 +59,6 @@ const MainLayout = () => {
             headerTitle: "Add Lectures",
             tabBarIcon: ({ focused, color, size }) => {
               return <Ionicons name='add' size={size} color={color} />;
-            },
-          }}
-        />
-        <Tab.Screen
-          name='Profile'
-          component={ProfileScreen}
-          options={{
-            headerTitle: "Profile",
-            tabBarIcon: ({ focused, color, size }) => {
-              return <AntDesign name='user' size={size} color={color} />;
             },
           }}
         />
