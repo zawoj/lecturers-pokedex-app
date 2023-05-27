@@ -6,7 +6,7 @@ import { LecturerType, LecturerLevel } from "../types/lecturer";
 import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
 
-const API_URL = "http://192.168.9.195:8080";
+export const API_URL = "TODO";
 
 interface State {
   lecturer: LecturerType | null;

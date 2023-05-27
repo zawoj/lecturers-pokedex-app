@@ -4,6 +4,7 @@ import {
   View,
   Text,
   Image,
+  Button,
   Dimensions,
   ScrollView,
   TextInput,
@@ -11,7 +12,9 @@ import {
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import * as Progress from "react-native-progress";
 import { LecturerLevel, LecturerType } from "../types/lecturer";
-import { LecturerContext } from "../context/lecturer";
+import { LecturerContext, API_URL } from "../context/lecturer";
+import { useForm, Controller } from "react-hook-form";
+import axios from 'axios';
 
 
 const LecturerLevelProgress = {
@@ -26,31 +29,46 @@ const screenWidth = Dimensions.get("window").width;
 export default function ViewLecturerScreen({
   navigation,
 }: MainNavigationProps) {
-  //const { lecturer } = useContext(LecturerContext);
-  const lecturer: LecturerType = {
-    _id: "1234",
-    name: "Maciej Gębala",
-    level: LecturerLevel.DOCTOR,
-    image: "https://storage.googleapis.com/pokedex_photos/53f201ea-f6f1-11ed-abbc-833fa3c660ed.jpeg",
-    description: "Jak jest doktor każdy widzi",
-    classes: [],
-    gradeDistribution: {
-      s_2: 0,
-      s_3: 0,
-      s_3_5: 3,
-      s_4: 2,
-      s_4_5: 1,
-      s_5: 0,
-      s_5_5: 0,
-    },
-    comments: ["Testowy koment1", "Testowy koment2", "Testowy koment3"]
-  };
+  const { lecturer } = useContext(LecturerContext);
+  const { control, handleSubmit, setValue, reset } = useForm();
+  const { getLecturer } = useContext(LecturerContext);
 
   if(lecturer == null){
     return (
     <Text> Wywaliło się przez nulla</Text>
       )
   }
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+
+    axios.post(`${API_URL}/users/${lecturer._id}/comments`, data)
+    .then((response) => {
+      console.log(response);
+      getLecturer(lecturer._id);
+    })
+    .catch((error) => console.log(error));
+    
+    setValue("comment", "");
+  };
+  // const lecturer: LecturerType = {
+  //   _id: "1234",
+  //   name: "Maciej Gębala",
+  //   level: LecturerLevel.DOCTOR,
+  //   image: "https://storage.googleapis.com/pokedex_photos/53f201ea-f6f1-11ed-abbc-833fa3c660ed.jpeg",
+  //   description: "Jak jest doktor każdy widzi",
+  //   classes: [],
+  //   gradeDistribution: {
+  //     s_2: 0,
+  //     s_3: 0,
+  //     s_3_5: 3,
+  //     s_4: 2,
+  //     s_4_5: 1,
+  //     s_5: 0,
+  //     s_5_5: 0,
+  //   },
+  //   comments: ["Testowy koment1", "Testowy koment2", "Testowy koment3"]
+  // };
 
   const gradeDistributionItems = Object.keys(lecturer.gradeDistribution).map(key => {
     return { grade: key, value: lecturer.gradeDistribution[key] };
@@ -99,6 +117,26 @@ export default function ViewLecturerScreen({
         </View>
         {/* Add comment form */}
         <Text style={styles.heading}>Add comment</Text>
+        <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder='Your comment'
+                value={value}
+                onChangeText={onChange}
+                style={styles.textInputStyle}
+              />
+            )}
+            name='comment'
+          />
+          <View
+          style={{
+            width: "80%",
+            margin: 10,
+          }}
+        >
+          <Button title='Submit' onPress={handleSubmit(onSubmit)} />
+        </View>
         {/* Comments */}
         <Text style={styles.heading}>Comments</Text>
         <View>
@@ -179,5 +217,12 @@ const styles = StyleSheet.create({
   },
   gradeText: {
     textAlign: "center",
+  },
+  textInputStyle: {
+    width: "100%",
+    height: 40,
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
+    marginTop: 4,
   },
 });
