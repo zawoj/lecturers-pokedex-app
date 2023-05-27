@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   StyleSheet,
   View,
@@ -10,24 +10,8 @@ import {
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import * as Progress from "react-native-progress";
 import { LecturerLevel, LecturerType } from "../types/lecturer";
+import { LecturerContext } from "../context/lecturer";
 
-const currentLecturer: LecturerType = {
-  _id: "1234",
-  name: "Maciej Gębala",
-  level: LecturerLevel.DOCTOR,
-  image: "https://storage.googleapis.com/pokedex_photos/53f201ea-f6f1-11ed-abbc-833fa3c660ed.jpeg",
-  description: "Jak jest doktor każdy widzi",
-  classes: [],
-  gradeDistribution: {
-    s_2: 0,
-    s_3: 0,
-    s_3_5: 0,
-    s_4: 0,
-    s_4_5: 0,
-    s_5: 0,
-    s_5_5: 0,
-  },
-};
 
 const LecturerLevelProgress = {
   [LecturerLevel.ENGINEER]: 0.25,
@@ -41,30 +25,37 @@ const screenWidth = Dimensions.get("window").width;
 export default function ViewLecturerScreen({
   navigation,
 }: MainNavigationProps) {
+  const { lecturer } = useContext(LecturerContext);
 
-  const gradeDistributionItems = Object.keys(currentLecturer.gradeDistribution).map(key => {
-    return { grade: key, value: currentLecturer.gradeDistribution[key] };
+  if(lecturer == null){
+    return (
+    <Text> Wywaliło się przez nulla</Text>
+      )
+  }
+
+  const gradeDistributionItems = Object.keys(lecturer.gradeDistribution).map(key => {
+    return { grade: key, value: lecturer.gradeDistribution[key] };
   });
 
   const totalValue = Math.max(gradeDistributionItems.reduce((acc, item) => acc + item.value, 0), 1);
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: currentLecturer.image}} />
+      <Image style={styles.image} source={{ uri: lecturer.image}} />
       <ScrollView
         style={styles.scrollContainer}
         contentContainerStyle={styles.scrollContainerContent}
       >
         <View style={styles.spaceForImage} />
-        <Text style={styles.name}>{currentLecturer.name}</Text>
+        <Text style={styles.name}>{lecturer.name}</Text>
         <Progress.Bar
-          progress={LecturerLevelProgress[currentLecturer.level]}
+          progress={LecturerLevelProgress[lecturer.level]}
           width={screenWidth * 0.9}
           height={10}
         />
         <Text style={styles.heading}>Classes</Text>
         <View>
-          {currentLecturer.classes.map((item, index) => (
+          {lecturer.classes.map((item, index) => (
             <Text key={index} style={styles.item}>
               {"\u2022 "}
               {item}

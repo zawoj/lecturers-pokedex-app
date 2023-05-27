@@ -3,8 +3,10 @@ import type { FC, ReactNode } from "react";
 import PropTypes from "prop-types";
 
 import { LecturerType, LecturerLevel } from "../types/lecturer";
+import * as FileSystem from 'expo-file-system';
+import axios from 'axios';
 
-const API_URL = "https://pokedex-uijzr7bcfa-ew.a.run.app";
+const API_URL = "http://192.168.9.195:8080";
 
 interface State {
   lecturer: LecturerType | null;
@@ -186,19 +188,31 @@ export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
   };
 
   const addLecturer = (lecturer: LecturerType): void => {
-    const res = fetch(`${API_URL}/users`, {
-      method: "POST",
-      body: JSON.stringify(lecturer),
-    }).then((response) => response.json());
+    console.log(lecturer.image);
 
-    res.then((data) => {
-      dispatch({
-        type: ActionType.ADDLECTURER,
-        payload: {
-          lecturer: data,
-        },
-      });
-    });
+    let form = new FormData();
+    form.append('file', { uri: lecturer.image, name: 'media', type: `image/jpeg` } as any)
+    form.append("data", JSON.stringify(lecturer));
+
+
+
+    const options = {
+      method: 'POST',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+      },
+  };
+
+  axios.post(`${API_URL}/users`, form, options)
+  .then((response) => {
+    console.log(response);
+    getLecturersList();
+  })
+  .catch((error) => console.log(error));
+
+
+  
   };
 
   return (

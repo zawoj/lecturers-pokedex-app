@@ -30,7 +30,7 @@ export default function HomeScreen({ navigation }: MainNavigationProps) {
           >
             <Image
               // @ts-ignore
-              source={item.image}
+              source={{ uri: item.image}}
               resizeMode='cover'
               style={styles.avatar}
             />

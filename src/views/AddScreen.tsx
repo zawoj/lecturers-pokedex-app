@@ -33,8 +33,9 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
       rating5: null,
       rating5_5: null,
     });
+    data.image = data.image.uri;
     console.log(JSON.stringify(data));
-    // addLecturer(data);
+    addLecturer(data);
     navigation.navigate("Lectures");
   };
 
