@@ -68,6 +68,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
         s_5: data.rating5 ? parseInt(data.rating5) : 0,
         s_5_5: data.rating5_5 ? parseInt(data.rating5_5) : 0,
       },
+      comments: [],
     };
 
     console.log(JSON.stringify(lecturer));

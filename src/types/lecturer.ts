@@ -6,6 +6,7 @@ export type LecturerType = {
   description: string;
   classes: string[];
   gradeDistribution: GradeDistributionType;
+  comments: string[];
 };
 
 export type GradeDistributionType = {

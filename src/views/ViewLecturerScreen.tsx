@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  TextInput,
 } from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import * as Progress from "react-native-progress";
@@ -25,7 +26,25 @@ const screenWidth = Dimensions.get("window").width;
 export default function ViewLecturerScreen({
   navigation,
 }: MainNavigationProps) {
-  const { lecturer } = useContext(LecturerContext);
+  //const { lecturer } = useContext(LecturerContext);
+  const lecturer: LecturerType = {
+    _id: "1234",
+    name: "Maciej Gębala",
+    level: LecturerLevel.DOCTOR,
+    image: "https://storage.googleapis.com/pokedex_photos/53f201ea-f6f1-11ed-abbc-833fa3c660ed.jpeg",
+    description: "Jak jest doktor każdy widzi",
+    classes: [],
+    gradeDistribution: {
+      s_2: 0,
+      s_3: 0,
+      s_3_5: 3,
+      s_4: 2,
+      s_4_5: 1,
+      s_5: 0,
+      s_5_5: 0,
+    },
+    comments: ["Testowy koment1", "Testowy koment2", "Testowy koment3"]
+  };
 
   if(lecturer == null){
     return (
@@ -77,6 +96,17 @@ export default function ViewLecturerScreen({
             />
           </View>
         ))}
+        </View>
+        {/* Add comment form */}
+        <Text style={styles.heading}>Add comment</Text>
+        {/* Comments */}
+        <Text style={styles.heading}>Comments</Text>
+        <View>
+          {lecturer.comments.map((item, index) => (
+            <Text key={index} style={styles.item}>
+              {item}
+            </Text>
+          ))}
         </View>
       </ScrollView>
     </View>
