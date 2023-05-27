@@ -62,6 +62,7 @@ export default function ViewLecturerScreen({
           width={screenWidth * 0.9}
           height={10}
         />
+        <Text style={styles.description}>{currentLecturer.description}</Text>
         <Text style={styles.heading}>Classes</Text>
         <View>
           {currentLecturer.classes.map((item, index) => (
@@ -76,7 +77,7 @@ export default function ViewLecturerScreen({
         {gradeDistributionItems.map((item, index) => (
           <View key={index} style={styles.gradeRow}>
             <View style={styles.gradeBubble}>
-              <Text style={styles.gradeText}>{item.grade.replace("s_", "")}</Text>
+              <Text style={styles.gradeText}>{item.grade.replace("s_", "").replace("_", ".")}</Text>
             </View>
             <Progress.Bar
               progress={item.value / totalValue}
@@ -119,6 +120,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 10,
+    alignSelf: "center",
+  },
+  description: {
+    fontSize: 18,
     textAlign: "center",
     marginVertical: 10,
     alignSelf: "center",
