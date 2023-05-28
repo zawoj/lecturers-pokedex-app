@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Button, Image, View, Platform, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { Image, View, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import SimpleButton from "../Buttons/SimpleButton";
 import { COLORS } from "../../types/colors";

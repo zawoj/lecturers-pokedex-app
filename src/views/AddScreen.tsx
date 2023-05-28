@@ -2,8 +2,6 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
-  Button,
   ScrollView,
   ToastAndroid,
 } from "react-native";

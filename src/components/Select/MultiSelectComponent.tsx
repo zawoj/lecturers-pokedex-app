@@ -6,11 +6,9 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
-  Button,
   StyleSheet,
 } from "react-native";
 import SimpleButton from "../Buttons/SimpleButton";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { COLORS } from "../../types/colors";
 
 const MultiSelect = ({
