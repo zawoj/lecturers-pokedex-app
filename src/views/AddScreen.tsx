@@ -20,6 +20,14 @@ import SimpleTextInput from "../components/TextInput/SimpleTextInput";
 import SimpleButton from "../components/Buttons/SimpleButton";
 
 function isNumber(n: any) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
+function validateRating(n: any) {
+  if (n == null || !isNumber(n)) {
+    return false;
+  }
+
+  var val = parseFloat(n);
+  return Number.isInteger(val) && val >= 0;
+}
 
 
 export default function AddScreen({ navigation }: MainNavigationProps) {
@@ -48,38 +56,38 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
       return;
     }
 
-    if (data.rating2 == null || !isNumber(data.rating2)) {
+    if (!validateRating(data.rating2)) {
       ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
       return;
     }
 
-    if (data.rating3 == null || !isNumber(data.rating3)) {
+    if (!validateRating(data.rating3)) {
       ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
       return;
     }
 
-    if (data.rating3_5 == null || !isNumber(data.rating3_5)) {
+    if (!validateRating(data.rating3_5)) {
       ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
       return;
     }
 
-    if (data.rating4 == null || !isNumber(data.rating4)) {
+    if (!validateRating(data.rating4)) {
       ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
       return;
     }
 
-    if (data.rating4_5 == null || !isNumber(data.rating4_5)) {
+    if (!validateRating(data.rating4_5)) {
       ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
       return;
     }
 
-    if (data.rating5 == null || !isNumber(data.rating5)) {
+    if (!validateRating(data.rating5)) {
       ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
       return;
     }
 
 
-    if (data.rating5_5 == null || !isNumber(data.rating5_5)) {
+    if (!validateRating(data.rating5_5)) {
       ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
       return;
     }
