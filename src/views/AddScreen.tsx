@@ -91,7 +91,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             control={control}
             render={({ field: { onChange, value } }) => (
               <SimpleTextInput
-                placeholder='Name'
+                placeholder='Enter name...'
                 value={value}
                 onChangeText={onChange}
               />
@@ -119,7 +119,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             control={control}
             render={({ field: { onChange, value } }) => (
               <SimpleTextInput
-                placeholder='Description'
+                placeholder='Your description...'
                 value={value}
                 onChangeText={onChange}
                 multiline={true}
@@ -154,13 +154,13 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           />
         </View>
 
-        <Text style={styles.heading}>Ratings:</Text>
+        <Text style={styles.heading}>Grade distribution:</Text>
         <View style={styles.subcontainer}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
               <SimpleTextInput
-                placeholder='Rating 2'
+                placeholder="number of 2's"
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
@@ -174,7 +174,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             control={control}
             render={({ field: { onChange, value } }) => (
               <SimpleTextInput
-                placeholder='Rating 3'
+                placeholder="number of 3's"
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
@@ -188,7 +188,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             control={control}
             render={({ field: { onChange, value } }) => (
               <SimpleTextInput
-                placeholder='Rating 3.5'
+                placeholder="number of 3.5's"
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
@@ -202,7 +202,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             control={control}
             render={({ field: { onChange, value } }) => (
               <SimpleTextInput
-                placeholder='Rating 4'
+                placeholder="number of 4's"
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
@@ -216,7 +216,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             control={control}
             render={({ field: { onChange, value } }) => (
               <SimpleTextInput
-                placeholder='Rating 4.5'
+                placeholder="number of 4.5's"
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
@@ -230,7 +230,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             control={control}
             render={({ field: { onChange, value } }) => (
               <SimpleTextInput
-                placeholder='Rating 5'
+                placeholder="number of 5's"
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
@@ -245,7 +245,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
             control={control}
             render={({ field: { onChange, value } }) => (
               <SimpleTextInput
-                placeholder='Rating 5.5'
+                placeholder="number of 5.5's"
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
