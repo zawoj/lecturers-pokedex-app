@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 5,
     margin: 3,
-    backgroundColor: COLORS.secondaryDark,
+    backgroundColor: COLORS.primaryDark,
     borderRadius: 15,
     fontSize: 16,
     color: COLORS.text
