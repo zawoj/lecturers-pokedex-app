@@ -9,6 +9,7 @@ import {
   ScrollView,
   TextInput,
   Pressable,
+  ToastAndroid,
 } from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import * as Progress from "react-native-progress";
@@ -56,15 +57,20 @@ export default function ViewLecturerScreen({
 
   const onSubmit = (data: any) => {
     console.log(data);
-
-    axios.post(`${API_URL}/users/${lecturer._id}/comment`, data)
-      .then((response) => {
-        console.log(response);
-        getLecturer(lecturer._id);
-      })
-      .catch((error) => console.log(error));
-
-    setValue("comment", "");
+    if (data == null || data["comment"] == undefined || data["comment"] == "") {
+      ToastAndroid.show("Comment cannot be an empty message", ToastAndroid.SHORT);
+    } else {
+      axios.post(`${API_URL}/users/${lecturer._id}/comment`, data)
+        .then((response) => {
+          console.log(response);
+          getLecturer(lecturer._id);
+        })
+        .catch((error) => {
+          console.log(error);
+          ToastAndroid.show("Couldn't submit comment", ToastAndroid.SHORT);
+        });
+    }
+    setValue("comment", undefined);
   };
   // const lecturer: LecturerType = {
   //   _id: "1234",
