@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { LecturerType, LecturerLevel } from "../types/lecturer";
 import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from "expo-image-manipulator";
-import { Image } from "react-native";
+import { Image, ToastAndroid } from "react-native";
 
 import axios from 'axios';
 
@@ -176,7 +176,6 @@ export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
   const addLecturer = (lecturer: LecturerType): void => {
     console.log(lecturer.image);
 
-
     // Helper function to get image size as a promise
     const getImageSize = (uri: string): Promise<{ width: number, height: number }> => {
       return new Promise((resolve, reject) => {
@@ -210,6 +209,7 @@ export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
 
       } catch (error) {
         console.log(error);
+        ToastAndroid.show("error while processing image", ToastAndroid.SHORT)
         return null;
       }
     };
@@ -232,7 +232,10 @@ export const LecturerProvider: FC<LecturerProviderProps> = (props) => {
           console.log(response);
           getLecturersList();
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          ToastAndroid.show("Couldn't add new lecturer", ToastAndroid.SHORT)
+        });
     })
 
 

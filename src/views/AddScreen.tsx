@@ -5,6 +5,7 @@ import {
   TextInput,
   Button,
   ScrollView,
+  ToastAndroid,
 } from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import React, { useContext, useState } from "react";
@@ -18,6 +19,8 @@ import { COLORS } from "../types/colors";
 import SimpleTextInput from "../components/TextInput/SimpleTextInput";
 import SimpleButton from "../components/Buttons/SimpleButton";
 
+function isNumber(n: any) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
+
 
 export default function AddScreen({ navigation }: MainNavigationProps) {
   const [dummestCounterEver, setDummestCounter] = useState<number>(5); // do not touch !!!
@@ -25,17 +28,64 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
   const { addLecturer, lecturersList } = useContext(LecturerContext);
 
   const onSubmit = (data: any) => {
-
-
-    if (data.name === null || data.name == "") {
+    if (data.name == null || data.name == "") {
+      ToastAndroid.show("Lecturers name can't be empty", ToastAndroid.SHORT);
       return;
     }
 
     if (data.level == null) {
+      ToastAndroid.show("Plase select lecturers level", ToastAndroid.SHORT)
+      return;
+    }
+
+    if (data.classes == null || data.classes.length === 0) {
+      ToastAndroid.show("Please select at least one class", ToastAndroid.SHORT)
+      return;
+    }
+
+    if (data.description == null || data.description == "") {
+      ToastAndroid.show("Please provide a description", ToastAndroid.SHORT);
+      return;
+    }
+
+    if (data.rating2 == null || !isNumber(data.rating2)) {
+      ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
+      return;
+    }
+
+    if (data.rating3 == null || !isNumber(data.rating3)) {
+      ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
+      return;
+    }
+
+    if (data.rating3_5 == null || !isNumber(data.rating3_5)) {
+      ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
+      return;
+    }
+
+    if (data.rating4 == null || !isNumber(data.rating4)) {
+      ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
+      return;
+    }
+
+    if (data.rating4_5 == null || !isNumber(data.rating4_5)) {
+      ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
+      return;
+    }
+
+    if (data.rating5 == null || !isNumber(data.rating5)) {
+      ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
+      return;
+    }
+
+
+    if (data.rating5_5 == null || !isNumber(data.rating5_5)) {
+      ToastAndroid.show("Please update grades", ToastAndroid.SHORT);
       return;
     }
 
     if (data.image == null) {
+      ToastAndroid.show("Please select lecturers image", ToastAndroid.SHORT)
       return;
     }
 

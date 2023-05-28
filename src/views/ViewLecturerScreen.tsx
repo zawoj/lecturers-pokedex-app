@@ -57,7 +57,7 @@ export default function ViewLecturerScreen({
 
   const onSubmit = (data: any) => {
     console.log(data);
-    if (data == null || data["comment"] == undefined || data["comment"] == "") {
+    if (data.comment == null || data.comment == "") {
       ToastAndroid.show("Comment cannot be an empty message", ToastAndroid.SHORT);
     } else {
       axios.post(`${API_URL}/users/${lecturer._id}/comment`, data)
