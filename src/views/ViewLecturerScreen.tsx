@@ -38,7 +38,15 @@ export default function ViewLecturerScreen({
 
   if (lecturer == null) {
     return (
-      <Text> Wywaliło się przez nulla</Text>
+      <View style={{
+        flex: 1,
+        backgroundColor: COLORS.background,
+      }}>
+        <Text style={{ color: COLORS.text, }}>
+          Wywaliło się przez nulla
+        </Text>
+      </View>
+
     )
   }
 
