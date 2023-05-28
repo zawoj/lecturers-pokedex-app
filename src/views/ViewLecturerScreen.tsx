@@ -4,22 +4,17 @@ import {
   View,
   Text,
   Image,
-  Button,
   Dimensions,
   ScrollView,
-  TextInput,
-  Pressable,
   ToastAndroid,
 } from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import * as Progress from "react-native-progress";
-import { LecturerLevel, LecturerType } from "../types/lecturer";
+import { LecturerLevel } from "../types/lecturer";
 import { LecturerContext, API_URL } from "../context/lecturer";
 import { useForm, Controller } from "react-hook-form";
 import axios from 'axios';
 import { COLORS, GRADE_COLORS } from "../types/colors";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import CommonButton from "../components/Buttons/CommonButton";
 import SimpleButton from "../components/Buttons/SimpleButton";
 import SimpleTextInput from "../components/TextInput/SimpleTextInput";
 
@@ -48,7 +43,7 @@ export default function ViewLecturerScreen({
         backgroundColor: COLORS.background,
       }}>
         <Text style={{ color: COLORS.text, }}>
-          Wywaliło się przez nulla
+          Loading...
         </Text>
       </View>
 

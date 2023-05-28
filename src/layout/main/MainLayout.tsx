@@ -1,16 +1,11 @@
 import {
   NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-  useTheme,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useContext } from "react";
-import { TouchableOpacity, View, useColorScheme, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import AntDesign from "react-native-vector-icons/AntDesign";
 import HomeScreen from "../../views/Home";
 import ViewLecturerScreen from "../../views/ViewLecturerScreen";
 import AddScreen from "../../views/AddScreen";

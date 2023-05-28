@@ -4,14 +4,12 @@ import {
   View,
   Text,
   ScrollView,
-  Button,
   Image,
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import { LecturerContext } from "../context/lecturer";
-import { LecturerType, LecturerLevel } from "../types/lecturer";
 import { COLORS } from "../types/colors";
 
 export default function HomeScreen({ navigation }: MainNavigationProps) {

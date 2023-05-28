@@ -2,8 +2,7 @@ import { createContext, useEffect, useReducer } from "react";
 import type { FC, ReactNode } from "react";
 import PropTypes from "prop-types";
 
-import { LecturerType, LecturerLevel } from "../types/lecturer";
-import * as FileSystem from 'expo-file-system';
+import { LecturerType } from "../types/lecturer";
 import * as ImageManipulator from "expo-image-manipulator";
 import { Image, ToastAndroid } from "react-native";
 
