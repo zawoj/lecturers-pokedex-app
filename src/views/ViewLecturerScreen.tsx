@@ -8,6 +8,7 @@ import {
   Dimensions,
   ScrollView,
   TextInput,
+  Pressable,
 } from "react-native";
 import { MainNavigationProps } from "../layout/main/MainLayout";
 import * as Progress from "react-native-progress";
@@ -17,6 +18,8 @@ import { useForm, Controller } from "react-hook-form";
 import axios from 'axios';
 import { COLORS, GRADE_COLORS } from "../types/colors";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import CommonButton from "../components/Buttons/CommonButton";
+import SimpleButton from "../components/Buttons/SimpleButton";
 
 
 const LecturerLevelProgress = {
@@ -129,7 +132,7 @@ export default function ViewLecturerScreen({
               </View>
               <Progress.Bar
                 progress={item.value / totalValue}
-                width={0.6 * screenWidth}
+                width={0.65 * screenWidth}
                 height={10}
                 color={GRADE_COLORS[index]}
                 unfilledColor={COLORS.surface}
@@ -156,14 +159,7 @@ export default function ViewLecturerScreen({
           )}
           name='comment'
         />
-        <View
-          style={{
-            width: "80%",
-            margin: 10,
-          }}
-        >
-          <Button title='Submit' color={COLORS.secondary} onPress={handleSubmit(onSubmit)} />
-        </View>
+        <SimpleButton title="Submit" onPress={handleSubmit(onSubmit)} />
         {/* Comments */}
         <Text style={styles.heading}>Comments</Text>
         <View>
@@ -187,7 +183,6 @@ const styles = StyleSheet.create({
   image: {
     width: screenWidth,
     height: screenHeight * 0.3, // jakieś skalowanie lepsze trzeba by zrobić
-    // position: "absolute",
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
     zIndex: 999,
@@ -219,7 +214,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 10,
+    marginVertical: 5,
     alignSelf: "center",
     color: COLORS.textHeader,
   },
@@ -246,16 +241,17 @@ const styles = StyleSheet.create({
   textInputStyle: {
     width: "100%",
     height: 80,
-    marginTop: 4,
+    marginVertical: 10,
     backgroundColor: COLORS.surface,
     color: COLORS.text,
     paddingHorizontal: 5,
+    borderRadius: 10
   },
   comment: {
     backgroundColor: COLORS.surface,
     width: screenWidth * 0.9,
     paddingHorizontal: 5,
-    paddingVertical: 10,
+    paddingVertical: 15,
     margin: 5,
     color: COLORS.text,
     borderRadius: 15,
@@ -276,10 +272,12 @@ const styles = StyleSheet.create({
   classes: {
     display: "flex",
     flexDirection: "row",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    justifyContent: "center"
   },
   classesItem: {
     padding: 5,
+    margin: 3,
     backgroundColor: COLORS.secondaryDark,
     borderRadius: 15,
     fontSize: 16,
