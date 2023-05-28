@@ -1,8 +1,9 @@
 import React from "react";
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Text, View, StyleSheet, Pressable, Dimensions } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { COLORS } from "../../types/colors";
 
+const screenWidth = Dimensions.get("window").width;
 
 export default function SimpleButton(props: {
     onPress: any;
@@ -10,6 +11,8 @@ export default function SimpleButton(props: {
     color?: string;
 }) {
     const { onPress, title } = props;
+
+
     return (
         <Pressable
             style={
@@ -34,7 +37,7 @@ const styles = StyleSheet.create({
         elevation: 3,
         backgroundColor: COLORS.secondary,
         flexDirection: "row",
-        width: "80%",
+        width: screenWidth * 0.7,
     },
     text: {
         fontSize: 16,

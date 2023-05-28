@@ -14,25 +14,28 @@ import { LecturerLevel, LecturerType } from "../types/lecturer";
 import MultiSelect from "../components/Select/MultiSelectComponent";
 import { LecturerContext } from "../context/lecturer";
 import ImagePickerComponent from "../components/ImagePicker/ImagePicker";
+import { COLORS } from "../types/colors";
+import SimpleTextInput from "../components/TextInput/SimpleTextInput";
+import SimpleButton from "../components/Buttons/SimpleButton";
 
 
 export default function AddScreen({ navigation }: MainNavigationProps) {
   const [dummestCounterEver, setDummestCounter] = useState<number>(5); // do not touch !!!
   const { control, handleSubmit, setValue, reset } = useForm();
   const { addLecturer, lecturersList } = useContext(LecturerContext);
-  
+
   const onSubmit = (data: any) => {
 
 
-    if(data.name === null || data.name == ""){
+    if (data.name === null || data.name == "") {
       return;
     }
 
-    if(data.level == null){
+    if (data.level == null) {
       return;
     }
 
-    if(data.image == null){
+    if (data.image == null) {
       return;
     }
 
@@ -57,7 +60,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
       name: data.name,
       level: data.level,
       image: data.image.uri,
-      description: data.description ? data.description: "",
+      description: data.description ? data.description : "",
       classes: data.classes ? data.classes : [],
       gradeDistribution: {
         s_2: data.rating2 ? parseInt(data.rating2) : 0,
@@ -87,11 +90,10 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
+              <SimpleTextInput
                 placeholder='Name'
                 value={value}
                 onChangeText={onChange}
-                style={styles.textInputStyle}
               />
             )}
             name='name'
@@ -99,70 +101,65 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
         </View>
 
         <View style={styles.subcontainer}>
-        {lecturesLevelOptions && (
-          <MultiSelect
-            options={lecturesLevelOptions}
-            title='Level'
-            setValue={setValue}
-            name='level'
-            key={3*dummestCounterEver+2}
-          />
-        )}
-        </View>
-
-        <Controller
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              placeholder='Description'
-              value={value}
-              onChangeText={onChange}
-              style={{
-                ...styles.textInputStyle,
-                width: "80%",
-              }}
-              multiline={true}
-              numberOfLines={4}
-              maxLength={80}
+          {lecturesLevelOptions && (
+            <MultiSelect
+              options={lecturesLevelOptions}
+              title='Level'
+              setValue={setValue}
+              name='level'
+              key={3 * dummestCounterEver + 2}
             />
           )}
-          name='description'
-        />
-
-        <View style={styles.subcontainer}>
-        {classesOptions && (
-          <MultiSelect
-            options={classesOptions}
-            multi={true}
-            title='Classes'
-            setValue={setValue}
-            name='classes'
-            key={3*dummestCounterEver+1}
-          />
-        )}
         </View>
-        
-        <View style={styles.subcontainer}>
-        <Controller
-          control={control}
-          render={({ field: { onChange } }) => (
-            <ImagePickerComponent onChange={onChange} key={3*dummestCounterEver}/>
-          )}
-          name='image'
-        />
-</View>
 
-        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 30}}>Ratings:</Text>
         <View style={styles.subcontainer}>
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
+              <SimpleTextInput
+                placeholder='Description'
+                value={value}
+                onChangeText={onChange}
+                multiline={true}
+              />
+            )}
+            name='description'
+          />
+        </View>
+
+        <View style={styles.subcontainer}>
+          {classesOptions && (
+            <MultiSelect
+              options={classesOptions}
+              multi={true}
+              title='Classes'
+              setValue={setValue}
+              name='classes'
+              key={3 * dummestCounterEver + 1}
+            />
+          )}
+        </View>
+
+        <View style={styles.subcontainer}>
+          <Controller
+            control={control}
+            render={({ field: { onChange } }) => (
+              <ImagePickerComponent onChange={onChange} key={3 * dummestCounterEver} />
+            )}
+            name='image'
+          />
+        </View>
+
+        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 30 }}>Ratings:</Text>
+        <View style={styles.subcontainer}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <SimpleTextInput
                 placeholder='Rating 2'
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
-                style={styles.textInputStyle}
               />
             )}
             name='rating2'
@@ -172,12 +169,11 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
+              <SimpleTextInput
                 placeholder='Rating 3'
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
-                style={styles.textInputStyle}
               />
             )}
             name='rating3'
@@ -187,12 +183,11 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
+              <SimpleTextInput
                 placeholder='Rating 3.5'
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
-                style={styles.textInputStyle}
               />
             )}
             name='rating3_5'
@@ -202,12 +197,11 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
+              <SimpleTextInput
                 placeholder='Rating 4'
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
-                style={styles.textInputStyle}
               />
             )}
             name='rating4'
@@ -217,12 +211,11 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
+              <SimpleTextInput
                 placeholder='Rating 4.5'
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
-                style={styles.textInputStyle}
               />
             )}
             name='rating4_5'
@@ -232,12 +225,11 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
+              <SimpleTextInput
                 placeholder='Rating 5'
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
-                style={styles.textInputStyle}
               />
             )}
             name='rating5'
@@ -248,26 +240,18 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           <Controller
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
+              <SimpleTextInput
                 placeholder='Rating 5.5'
                 value={value}
                 onChangeText={onChange}
                 keyboardType='numeric'
-                style={styles.textInputStyle}
               />
             )}
             name='rating5_5'
           />
         </View>
 
-        <View
-          style={{
-            width: "80%",
-            margin: 10,
-          }}
-        >
-          <Button title='Submit' onPress={handleSubmit(onSubmit)} />
-        </View>
+        <SimpleButton title='Submit' onPress={handleSubmit(onSubmit)} />
       </View>
     </ScrollView>
   );
@@ -278,10 +262,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
+    backgroundColor: COLORS.background,
+    paddingBottom: 20,
   },
   subcontainer: {
-    width: "80%",
+    width: "90%",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -291,6 +276,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: "bold",
+    color: COLORS.textHeader,
   },
   scrollContainer: {
     flex: 1,
@@ -299,8 +285,10 @@ const styles = StyleSheet.create({
   textInputStyle: {
     width: "100%",
     height: 40,
-    borderBottomColor: "gray",
-    borderBottomWidth: 1,
-    marginTop: 4,
+    marginVertical: 10,
+    color: COLORS.text,
+    backgroundColor: COLORS.surface,
+    paddingHorizontal: 5,
+    borderRadius: 10,
   },
 });
