@@ -20,6 +20,7 @@ import { COLORS, GRADE_COLORS } from "../types/colors";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import CommonButton from "../components/Buttons/CommonButton";
 import SimpleButton from "../components/Buttons/SimpleButton";
+import SimpleTextInput from "../components/TextInput/SimpleTextInput";
 
 
 const LecturerLevelProgress = {
@@ -146,16 +147,7 @@ export default function ViewLecturerScreen({
         <Controller
           control={control}
           render={({ field: { onChange, value } }) => (
-            <TextInput
-              placeholder='Your comment'
-              value={value}
-              multiline={true}
-              onChangeText={onChange}
-              cursorColor={COLORS.secondaryDark}
-              placeholderTextColor={COLORS.textHint}
-              style={styles.textInputStyle}
-              numberOfLines={4}
-            />
+            <SimpleTextInput value={value} placeholder="Your comment..." onChangeText={onChange} multiline={true} />
           )}
           name='comment'
         />
