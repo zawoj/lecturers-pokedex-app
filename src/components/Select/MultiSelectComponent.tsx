@@ -9,6 +9,9 @@ import {
   Button,
   StyleSheet,
 } from "react-native";
+import SimpleButton from "../Buttons/SimpleButton";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import { COLORS } from "../../types/colors";
 
 const MultiSelect = ({
   multi = false,
@@ -49,22 +52,14 @@ const MultiSelect = ({
       style={{
         margin: 0,
         width: "100%",
+        alignItems: "center"
       }}
     >
-      <Button title={title} onPress={() => setIsOpen(true)} />
-      <View
-        style={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          marginTop: 10,
-        }}
-      >
-        <Text>Selected:</Text>
+      <SimpleButton title={title} onPress={() => setIsOpen(true)} />
+      <View style={styles.itemsContainer}>
         {selectedOptions.map((option, index) => (
-          <Text key={index}> {option} </Text>
-        ))}
-      </View>
+          <Text key={index} style={styles.item}> {option} </Text>
+        ))}</View>
       <Modal
         visible={isOpen}
         onRequestClose={() => setIsOpen(false)}
@@ -72,7 +67,7 @@ const MultiSelect = ({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <ScrollView style={{flexGrow:0}}>
+            <ScrollView style={{ flexGrow: 0 }}>
               {options.map((option, index) => (
                 <TouchableOpacity
                   key={index}
@@ -81,21 +76,26 @@ const MultiSelect = ({
                     if (!multi) setIsOpen(false);
                   }}
                   style={{
+                    alignItems: "center",
+                    flex: 1,
                     padding: 10,
+                    width: "100%",
+                    marginVertical: 2,
+                    borderRadius: 10,
                     backgroundColor: selectedOptions.includes(option)
-                      ? "blue"
-                      : "gray",
+                      ? COLORS.primary
+                      : COLORS.disabled
                   }}
                 >
-                  <Text style={{ color: "white" }}>{option}</Text>
+                  <Text style={{ color: COLORS.text }}>{option}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
-            {multi && <Button title='Done' onPress={() => setIsOpen(false)} />}
+            {multi && <SimpleButton title='Done' onPress={() => setIsOpen(false)} />}
           </View>
         </View>
-      </Modal>
-    </View>
+      </Modal >
+    </View >
   );
 };
 
@@ -107,19 +107,35 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
+    width: "80%",
     margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
+    backgroundColor: COLORS.background,
+    borderRadius: 10,
+    padding: 20,
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: COLORS.textHeader,
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowRadius: 8,
     elevation: 5,
+  },
+  itemsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    marginVertical: 5,
+  },
+  item: {
+    padding: 5,
+    margin: 3,
+    backgroundColor: COLORS.secondaryDark,
+    borderRadius: 15,
+    fontSize: 16,
+    color: COLORS.text
   },
 });
 

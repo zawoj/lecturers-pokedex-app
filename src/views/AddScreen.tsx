@@ -85,7 +85,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
   return (
     <ScrollView>
       <View style={styles.container}>
-
+        <Text style={styles.heading}>Name:</Text>
         <View style={styles.subcontainer}>
           <Controller
             control={control}
@@ -100,11 +100,12 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           />
         </View>
 
+        <Text style={styles.heading}>Level:</Text>
         <View style={styles.subcontainer}>
           {lecturesLevelOptions && (
             <MultiSelect
               options={lecturesLevelOptions}
-              title='Level'
+              title='Select Level'
               setValue={setValue}
               name='level'
               key={3 * dummestCounterEver + 2}
@@ -112,6 +113,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           )}
         </View>
 
+        <Text style={styles.heading}>Description:</Text>
         <View style={styles.subcontainer}>
           <Controller
             control={control}
@@ -127,12 +129,13 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           />
         </View>
 
+        <Text style={styles.heading}>Classes:</Text>
         <View style={styles.subcontainer}>
           {classesOptions && (
             <MultiSelect
               options={classesOptions}
               multi={true}
-              title='Classes'
+              title='Select Classes'
               setValue={setValue}
               name='classes'
               key={3 * dummestCounterEver + 1}
@@ -140,6 +143,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           )}
         </View>
 
+        <Text style={styles.heading}>Image:</Text>
         <View style={styles.subcontainer}>
           <Controller
             control={control}
@@ -150,7 +154,7 @@ export default function AddScreen({ navigation }: MainNavigationProps) {
           />
         </View>
 
-        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 30 }}>Ratings:</Text>
+        <Text style={styles.heading}>Ratings:</Text>
         <View style={styles.subcontainer}>
           <Controller
             control={control}
@@ -270,25 +274,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    marginBottom: 10,
-    marginTop: 10,
+    marginVertical: 5,
   },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
+    marginTop: 5,
     color: COLORS.textHeader,
-  },
-  scrollContainer: {
-    flex: 1,
-    width: "100%",
-  },
-  textInputStyle: {
-    width: "100%",
-    height: 40,
-    marginVertical: 10,
-    color: COLORS.text,
-    backgroundColor: COLORS.surface,
-    paddingHorizontal: 5,
-    borderRadius: 10,
   },
 });
