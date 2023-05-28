@@ -5,8 +5,8 @@ import {
   useTheme,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
-import { useColorScheme } from "react-native";
+import React, { useContext } from "react";
+import { TouchableOpacity, View, useColorScheme, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -15,6 +15,7 @@ import HomeScreen from "../../views/Home";
 import ViewLecturerScreen from "../../views/ViewLecturerScreen";
 import AddScreen from "../../views/AddScreen";
 import { COLORS } from "../../types/colors";
+import { LecturerContext } from "../../context/lecturer";
 
 type RootStackParamList = {
   Lectures: undefined;
@@ -32,11 +33,13 @@ const screenOptions = {
     borderTopWidth: 0,
   },
   tabBarItemStyle: {
-    marginBottom: 2
+    marginBottom: 2,
   }
 };
 
 const MainLayout = () => {
+  const { lecturer } = useContext(LecturerContext);
+
   return (
     <NavigationContainer>
       <Tab.Navigator {...{ screenOptions }}>
@@ -57,17 +60,28 @@ const MainLayout = () => {
         <Tab.Screen
           name='viewLecturer'
           component={ViewLecturerScreen}
+          listeners={{
+            tabPress: e => {
+              // Prevent default action
+              if (lecturer == null) {
+                e.preventDefault();
+              }
+            },
+          }}
           options={{
             title: "View Lecturer",
             tabBarActiveTintColor: COLORS.primaryLight,
             tabBarInactiveTintColor: COLORS.text,
             headerTintColor: COLORS.text,
+            tabBarLabelStyle: (lecturer == null) ? {
+              color: COLORS.disabled
+            } : {},
             headerStyle: {
               height: StatusBar.currentHeight,
               backgroundColor: COLORS.tabBar
             },
             tabBarIcon: ({ focused, color, size }) => {
-              return <Ionicons name='beer' size={size} color={color} />;
+              return <Ionicons name='beer' size={size} color={(lecturer == null) ? COLORS.disabled : color} />;
             },
           }}
         />

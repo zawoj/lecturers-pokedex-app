@@ -12,6 +12,7 @@ export const COLORS = {
     secondaryLight: "#FFBFA3",
     secondaryDark: "#C88065",
     accent: "#00FFFF",
+    disabled: "#707070",
 }
 
 export const GRADE_COLORS = ["#d43a48", "#ffa625", "#0192eb", "#8fb0c4", "#388d3c", "#f0cf98", "#9747ff"]
