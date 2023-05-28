@@ -45,8 +45,8 @@ const MainLayout = () => {
           component={HomeScreen}
           options={{
             title: "Lecturers",
-            tabBarActiveTintColor: COLORS.tabIconSelected,
-            tabBarInactiveTintColor: COLORS.tabIconDefault,
+            tabBarActiveTintColor: COLORS.primaryLight,
+            tabBarInactiveTintColor: COLORS.text,
             headerStyle: { backgroundColor: COLORS.tabBar },
             headerTintColor: COLORS.text,
             tabBarIcon: ({ focused, color, size }) => {
@@ -59,8 +59,8 @@ const MainLayout = () => {
           component={ViewLecturerScreen}
           options={{
             title: "View Lecturer",
-            tabBarActiveTintColor: COLORS.tabIconSelected,
-            tabBarInactiveTintColor: COLORS.tabIconDefault,
+            tabBarActiveTintColor: COLORS.primaryLight,
+            tabBarInactiveTintColor: COLORS.text,
             headerTintColor: COLORS.text,
             headerStyle: {
               height: StatusBar.currentHeight,
@@ -76,8 +76,8 @@ const MainLayout = () => {
           component={AddScreen}
           options={{
             title: "Add Lecturer",
-            tabBarActiveTintColor: COLORS.tabIconSelected,
-            tabBarInactiveTintColor: COLORS.tabIconDefault,
+            tabBarActiveTintColor: COLORS.primaryLight,
+            tabBarInactiveTintColor: COLORS.text,
             headerTintColor: COLORS.text,
             headerStyle: {
               backgroundColor: COLORS.tabBar

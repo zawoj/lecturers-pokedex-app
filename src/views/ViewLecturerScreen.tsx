@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -15,6 +15,8 @@ import { LecturerLevel, LecturerType } from "../types/lecturer";
 import { LecturerContext, API_URL } from "../context/lecturer";
 import { useForm, Controller } from "react-hook-form";
 import axios from 'axios';
+import { COLORS, GRADE_COLORS } from "../types/colors";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 
 const LecturerLevelProgress = {
@@ -25,6 +27,7 @@ const LecturerLevelProgress = {
 };
 
 const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
 
 export default function ViewLecturerScreen({
   navigation,
@@ -33,22 +36,22 @@ export default function ViewLecturerScreen({
   const { control, handleSubmit, setValue, reset } = useForm();
   const { getLecturer } = useContext(LecturerContext);
 
-  if(lecturer == null){
+  if (lecturer == null) {
     return (
-    <Text> Wywaliło się przez nulla</Text>
-      )
+      <Text> Wywaliło się przez nulla</Text>
+    )
   }
 
   const onSubmit = (data: any) => {
     console.log(data);
 
     axios.post(`${API_URL}/users/${lecturer._id}/comment`, data)
-    .then((response) => {
-      console.log(response);
-      getLecturer(lecturer._id);
-    })
-    .catch((error) => console.log(error));
-    
+      .then((response) => {
+        console.log(response);
+        getLecturer(lecturer._id);
+      })
+      .catch((error) => console.log(error));
+
     setValue("comment", "");
   };
   // const lecturer: LecturerType = {
@@ -78,70 +81,86 @@ export default function ViewLecturerScreen({
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: lecturer.image}} />
+      <Image style={styles.image} source={{ uri: lecturer.image }} />
       <ScrollView
         style={styles.scrollContainer}
         contentContainerStyle={styles.scrollContainerContent}
       >
-        <View style={styles.spaceForImage} />
         <Text style={styles.name}>{lecturer.name}</Text>
-        <Progress.Bar
-          progress={LecturerLevelProgress[lecturer.level]}
-          width={screenWidth * 0.9}
-          height={10}
-        />
+        <View style={styles.levelContainer}>
+          <Progress.Bar
+            style={styles.levelProgressBar}
+            progress={LecturerLevelProgress[lecturer.level]}
+            width={screenWidth * 0.9}
+            height={20}
+            color={COLORS.primary}
+            unfilledColor={COLORS.surface}
+            borderWidth={0}
+            borderRadius={15}
+          />
+          <Text style={styles.levelText}>
+            {lecturer.level}
+          </Text>
+        </View>
+
         <Text style={styles.description}>{lecturer.description}</Text>
         <Text style={styles.heading}>Classes</Text>
-        <View>
+        <View style={styles.classes}>
           {lecturer.classes.map((item, index) => (
-            <Text key={index} style={styles.item}>
-              {"\u2022 "}
+            <Text key={index} style={styles.classesItem}>
               {item}
             </Text>
           ))}
         </View>
         <Text style={styles.heading}>Grade Distribution</Text>
         <View>
-        {gradeDistributionItems.map((item, index) => (
-          <View key={index} style={styles.gradeRow}>
-            <View style={styles.gradeBubble}>
-              <Text style={styles.gradeText}>{item.grade.replace("s_", "").replace("_", ".")}</Text>
+          {gradeDistributionItems.map((item, index) => (
+            <View key={index} style={styles.gradeRow}>
+              <View style={styles.gradeBubble}>
+                <Text style={styles.gradeText}>{item.grade.replace("s_", "").replace("_", ".")}</Text>
+              </View>
+              <Progress.Bar
+                progress={item.value / totalValue}
+                width={0.6 * screenWidth}
+                height={10}
+                color={GRADE_COLORS[index]}
+                unfilledColor={COLORS.surface}
+                borderWidth={0}
+              />
             </View>
-            <Progress.Bar
-              progress={item.value / totalValue}
-              width={0.6 * screenWidth}
-              height={10}
-            />
-          </View>
-        ))}
+          ))}
         </View>
         {/* Add comment form */}
         <Text style={styles.heading}>Add comment</Text>
         <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                placeholder='Your comment'
-                value={value}
-                onChangeText={onChange}
-                style={styles.textInputStyle}
-              />
-            )}
-            name='comment'
-          />
-          <View
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              placeholder='Your comment'
+              value={value}
+              multiline={true}
+              onChangeText={onChange}
+              cursorColor={COLORS.secondaryDark}
+              placeholderTextColor={COLORS.textHint}
+              style={styles.textInputStyle}
+              numberOfLines={4}
+            />
+          )}
+          name='comment'
+        />
+        <View
           style={{
             width: "80%",
             margin: 10,
           }}
         >
-          <Button title='Submit' onPress={handleSubmit(onSubmit)} />
+          <Button title='Submit' color={COLORS.secondary} onPress={handleSubmit(onSubmit)} />
         </View>
         {/* Comments */}
         <Text style={styles.heading}>Comments</Text>
         <View>
           {lecturer.comments.map((item, index) => (
-            <Text key={index} style={styles.item}>
+            <Text key={index} style={styles.comment}>
               {item}
             </Text>
           ))}
@@ -155,12 +174,12 @@ export default function ViewLecturerScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.background,
   },
   image: {
     width: screenWidth,
-    height: screenWidth,
-    position: "absolute",
+    height: screenHeight * 0.3, // jakieś skalowanie lepsze trzeba by zrobić
+    // position: "absolute",
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
     zIndex: 999,
@@ -173,21 +192,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
-  spaceForImage: {
-    height: screenWidth,
-  },
   name: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
     alignSelf: "center",
+    color: COLORS.textHeader,
   },
   description: {
     fontSize: 18,
     textAlign: "center",
     marginVertical: 10,
     alignSelf: "center",
+    color: COLORS.text
   },
   heading: {
     fontSize: 24,
@@ -195,9 +213,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 10,
     alignSelf: "center",
-  },
-  item: {
-    fontSize: 16,
+    color: COLORS.textHeader,
   },
   gradeRow: {
     flexDirection: "row",
@@ -209,20 +225,56 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 50,
-    backgroundColor: "#eee",
+    backgroundColor: COLORS.surface,
     width: 70,
     justifyContent: "center",
     alignItems: "center",
     flexShrink: 0,
   },
   gradeText: {
+    color: COLORS.text,
     textAlign: "center",
   },
   textInputStyle: {
     width: "100%",
-    height: 40,
-    borderBottomColor: "gray",
-    borderBottomWidth: 1,
+    height: 80,
     marginTop: 4,
+    backgroundColor: COLORS.surface,
+    color: COLORS.text,
+    paddingHorizontal: 5,
+  },
+  comment: {
+    backgroundColor: COLORS.surface,
+    width: screenWidth * 0.9,
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    margin: 5,
+    color: COLORS.text,
+    borderRadius: 15,
+  },
+  levelContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 5,
+  },
+  levelProgressBar: {
+    position: "absolute",
+  },
+  levelText: {
+    position: "absolute",
+    color: COLORS.text
+  },
+  classes: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap"
+  },
+  classesItem: {
+    padding: 5,
+    backgroundColor: COLORS.secondaryDark,
+    borderRadius: 15,
+    fontSize: 16,
+    color: COLORS.text
   },
 });
